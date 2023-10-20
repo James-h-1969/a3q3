@@ -1,0 +1,31 @@
+; initial state is 0
+; input alphabet is {0, 1}
+
+;function for going to the left
+0 0 0 L 0
+0 1 1 L 0
+0 M M R 2
+0 _ _ * 2
+
+;function for going to the right
+1 0 0 R 1
+1 1 1 R 1
+1 N N L 3
+1 _ _ * 3 
+
+;function for Ms
+2 * M R 1
+
+;function for Ns
+3 * N L 3a
+
+3a 0 0 L 3b
+3a 1 1 L 3b
+3a M M * halt-reject
+
+3b 0 0 L 0
+3b 1 1 L 0
+3b M M R 6
+
+6 0 * * halt-reject
+6 1 * * halt-accept

@@ -1,0 +1,67 @@
+; initial state is 0
+; input alphabet is {0, 1}
+
+;function for going to the left
+0 0 0 L 0
+0 1 1 L 0
+0 M M R 2
+0 Q Q R 2
+0 X X R 2
+0 _ _ * 2
+
+;function for going to the right
+1 0 0 R 1
+1 1 1 R 1
+1 N N L 3
+1 S S L 3
+1 X X L 3
+1 _ _ * 3 
+
+;function for Ms
+2 0 M R 1
+2 1 Q R 1
+2 _ X R 1
+
+;function for Ns
+3 0 N L 3a
+3 1 S L 3a
+3 _ X L 3a
+
+3a 0 0 L 3b
+3a 1 1 L 3b
+3a M M * halt-reject
+3a Q Q * halt-reject
+
+3b 0 0 L 0
+3b 1 1 L 0
+3b M M R 6
+3b Q Q R 6
+3b X X R halt-accept
+
+6 0 * * halt-reject
+6 1 * L 4
+
+4 Q Q L 4
+4 M M L 4
+4 1 1 L 4
+4 X X R 5
+4 Y Y L 4
+
+5 M X R 5a; should look for a N
+5 Q X R 5b; should look for an S
+5 1 1 R halt-accept
+
+5a 1 1 R 5c
+5a M M R 5a
+5a Q Q R 5a
+
+5b 1 1 R 5d
+5b M M R 5b
+5b Q Q R 5b
+
+5c N Y L 4
+5c S S L halt-reject
+5c Y Y R 5c
+5d Y Y R 5d
+5d S Y L 4
+5d N Y L halt-reject
